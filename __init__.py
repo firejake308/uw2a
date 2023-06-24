@@ -1,5 +1,5 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from aqt import pyqtSignal, QThread
+from aqt import pyqtSignal, QThread, mw
 from .open_card import openBrowseLink
 
 
@@ -13,7 +13,8 @@ class SignalThread(QThread):
         self.qid_set_signal.emit(self.qid)
 
 def do_the_thing(qid):
-    openBrowseLink(f"tag:#AK_Step2_v*::#UWorld::*{qid}")
+    config = mw.addonManager.getConfig(__name__)
+    openBrowseLink(f"tag:#AK_Step{config['step']}_v{config['AnKing_version']}::#UWorld::*{qid}")
 
 signal_thread = SignalThread()
 signal_thread.qid_set_signal.connect(do_the_thing)
