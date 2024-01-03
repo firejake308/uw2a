@@ -2,6 +2,13 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from aqt import pyqtSignal, QThread, mw
 from .open_card import openBrowseLink
 
+# handle SIGPIPE on macOS
+try:
+    from signal import signal, SIGPIPE, SIG_IGN
+    signal(SIGPIPE,SIG_IGN)
+# error gets raised on Windows, nbd
+except ImportError:
+    pass
 
 class SignalThread(QThread):
     qid_set_signal = pyqtSignal(str)
@@ -31,6 +38,15 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def log_message(self, format: str, *args) -> None:
         return
+    
+    def handle_one_request(self) -> None:
+        try:
+            super().handle_one_request()
+        # gets raised when button is clicked multiple times in rapid succession,
+        # or when the button is clicked after a long time
+        except ConnectionAbortedError:
+            pass
+
 httpd = HTTPServer(('localhost', 8088), MyHandler)
 
 def start_server():
