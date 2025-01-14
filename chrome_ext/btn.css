@@ -23,6 +23,7 @@
     vertical-align: middle;
     white-space: nowrap;
     word-wrap: break-word;
+    margin: 0;
 }
 
 .question-details {
