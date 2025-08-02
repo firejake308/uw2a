@@ -4,11 +4,12 @@ var qidObserver = new MutationObserver(function(mutations){
 
 function addButton() {
     const qid_display = document.querySelector('.question-id');
-    const qid = /Question Id: (\d+)/.exec(qid_display.textContent)[1];
+    const parentText = qid_display.parentElement.textContent;
+    const qid = /Question Id:\s*(\d+)/.exec(parentText)[1];
     const btn = document.createElement('button');
     btn.id = 'uw2a-btn';
     btn.onclick = () => fetch(`http://localhost:8088/${qid}`, {mode: 'no-cors'}).catch(
-        () => alert('Failed to open card. Check if Anki is running. and q2uw extension is installed')
+        () => alert('Failed to open card. Check if Anki is running. and uworld2anki extension is installed')
     );
     btn.innerHTML = `Open in Anki: ${qid}`;
     qid_display.parentNode.append(btn);
@@ -23,10 +24,11 @@ function addButton() {
 function editButton() {
     qidObserver.disconnect();
     const qid_display = document.querySelector('.question-id');
-    const qid = /Question Id: (\d+)/.exec(qid_display.textContent)[1];
+    const parentText = qid_display.parentElement.textContent;
+    const qid = /Question Id:\s*(\d+)/.exec(parentText)[1];
     const btn = document.querySelector('#uw2a-btn');
     btn.onclick = () => fetch(`http://localhost:8088/${qid}`, {mode: 'no-cors'}).catch(
-        () => alert('Failed to open card. Check if Anki is running. and q2uw extension is installed')
+        () => alert('Failed to open card. Check if Anki is running. and uworld2anki extension is installed')
     );
     btn.innerHTML = `Open in Anki: ${qid}`;
     qidObserver.observe(qid_display.parentElement, {childList: true, subtree: true, characterData: true})
