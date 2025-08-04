@@ -21,7 +21,8 @@ class SignalThread(QThread):
 
 def do_the_thing(qid):
     config = mw.addonManager.getConfig(__name__)
-    openBrowseLink(f"tag:#AK_Step{config['step']}_v{config['AnKing_version']}::#UWorld*::{qid}")
+    str = f"tag:#AK_Step{config['step']}_v{config['AnKing_version']}::#UWorld::*{qid} & tag:#AK*{config['shelf']}"
+    openBrowseLink(str)
 
 signal_thread = SignalThread()
 signal_thread.qid_set_signal.connect(do_the_thing)
