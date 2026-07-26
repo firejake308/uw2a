@@ -1,5 +1,5 @@
 ### Step
-can be set to either 1 or 2, dpending on whether you want to open the cards for Step1 or Step2
+can be set to 1, 2, or 3, depending on whether you want to open the cards for Step1, Step2, or Step3
 
 ### AnKing_version
 can be set to a number, like 11, to open tags like `#AK_Step2_v`, or an asterisk in quotes ("*") to work 
